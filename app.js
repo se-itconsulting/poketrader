@@ -457,34 +457,50 @@ const setSearch = document.querySelector("#setSearch");
 const globalSearch = document.querySelector("#globalSearch");
 const searchResults = document.querySelector("#searchResults");
 const dealStrip = document.querySelector("#dealStrip");
-const portfolioPhotos = document.querySelector("#portfolioPhotos");
+const portfolioForm = document.querySelector("#portfolioForm");
+const portfolioPhoto = document.querySelector("#portfolioPhoto");
+const portfolioFileName = document.querySelector("#portfolioFileName");
+const portfolioName = document.querySelector("#portfolioName");
+const portfolioType = document.querySelector("#portfolioType");
+const portfolioCondition = document.querySelector("#portfolioCondition");
+const portfolioQuantity = document.querySelector("#portfolioQuantity");
+const portfolioValueInput = document.querySelector("#portfolioValueInput");
 const portfolioPhotoGrid = document.querySelector("#portfolioPhotoGrid");
-const importCount = document.querySelector("#importCount");
+const portfolioItemCount = document.querySelector("#portfolioItemCount");
 const portfolioProgressText = document.querySelector("#portfolioProgressText");
+const ownPortfolioValue = document.querySelector("#ownPortfolioValue");
 
-function renderPortfolioPhotos(files) {
-  if (!files.length) {
-    portfolioPhotoGrid.innerHTML = `<div class="empty-state">Wähle deine Portfolio-Fotos aus, dann erscheinen sie hier als lokale Import-Vorschau.</div>`;
-    importCount.textContent = "0 Fotos";
-    portfolioProgressText.textContent = "ca. 1% erfasst";
+const ownPortfolioItems = [];
+
+function formatEuro(value) {
+  return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
+}
+
+function renderOwnPortfolio() {
+  const totalValue = ownPortfolioItems.reduce((sum, item) => sum + item.value * item.quantity, 0);
+
+  portfolioItemCount.textContent = `${ownPortfolioItems.length} Position${ownPortfolioItems.length === 1 ? "" : "en"}`;
+  ownPortfolioValue.textContent = formatEuro(totalValue);
+  portfolioProgressText.textContent = ownPortfolioItems.length ? "ca. 1% erfasst" : "0% erfasst";
+
+  if (!ownPortfolioItems.length) {
+    portfolioPhotoGrid.innerHTML = `<div class="empty-state">Lade ein Bild hoch und lege deine erste Portfolio-Position an.</div>`;
     return;
   }
 
-  importCount.textContent = `${files.length} Fotos`;
-  portfolioProgressText.textContent = "ca. 1% erfasst";
-  portfolioPhotoGrid.innerHTML = files
-    .map((file, index) => {
-      const url = URL.createObjectURL(file);
-      return `
+  portfolioPhotoGrid.innerHTML = ownPortfolioItems
+    .map(
+      (item) => `
         <article class="portfolio-photo-card">
-          <img src="${url}" alt="Portfolio Foto ${index + 1}" loading="lazy" />
+          <img src="${item.image}" alt="${item.name}" loading="lazy" />
           <div>
-            <strong>${file.name}</strong>
-            <span>Wartet auf Karten-Erkennung</span>
+            <strong>${item.name}</strong>
+            <span>${item.type} · ${item.condition} · ${item.quantity}x</span>
+            <em>${formatEuro(item.value * item.quantity)}</em>
           </div>
         </article>
-      `;
-    })
+      `,
+    )
     .join("");
 }
 
@@ -803,8 +819,40 @@ dealStrip.addEventListener("click", (event) => {
   renderTicker("ebay");
 });
 
-portfolioPhotos.addEventListener("change", () => {
-  renderPortfolioPhotos(Array.from(portfolioPhotos.files || []));
+portfolioPhoto.addEventListener("change", () => {
+  const file = portfolioPhoto.files?.[0];
+  portfolioFileName.textContent = file ? file.name : "HEIC/JPG/PNG lokal auswählen";
+});
+
+portfolioForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const file = portfolioPhoto.files?.[0];
+  const value = Number(portfolioValueInput.value);
+  const quantity = Number(portfolioQuantity.value || 1);
+
+  if (!portfolioName.value.trim() || !Number.isFinite(value) || value < 0) return;
+
+  ownPortfolioItems.unshift({
+    name: portfolioName.value.trim(),
+    type: portfolioType.value,
+    condition: portfolioCondition.value,
+    quantity: Math.max(1, quantity),
+    value,
+    image: file ? URL.createObjectURL(file) : "https://images.pokemontcg.io/sv3pt5/25_hires.png",
+  });
+
+  collection.unshift([
+    portfolioName.value.trim(),
+    `${portfolioType.value} · ${portfolioCondition.value} · Eigenes Portfolio`,
+    formatEuro(value * Math.max(1, quantity)),
+    ownPortfolioItems[0].image,
+  ]);
+
+  portfolioForm.reset();
+  portfolioQuantity.value = "1";
+  portfolioFileName.textContent = "HEIC/JPG/PNG lokal auswählen";
+  renderOwnPortfolio();
+  renderCollection();
 });
 
 globalSearch.addEventListener("input", renderSearchResults);
@@ -935,6 +983,7 @@ chatForm.addEventListener("submit", (event) => {
 
 renderTicker();
 renderBuyListings();
+renderOwnPortfolio();
 renderCatalog();
 renderSearchResults();
 renderCollection();

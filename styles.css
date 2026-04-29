@@ -351,10 +351,16 @@ article {
 
 .import-console {
   display: grid;
-  grid-template-columns: minmax(280px, 1fr) 1fr;
+  grid-template-columns: 1.35fr 0.65fr;
   gap: 14px;
   padding: 18px;
   border-bottom: 1px solid var(--line);
+}
+
+.portfolio-form {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 12px;
 }
 
 .import-drop {
@@ -377,19 +383,35 @@ article {
   font-weight: 950;
 }
 
+.portfolio-fields {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.9fr 0.55fr 0.75fr auto;
+  gap: 8px;
+  align-content: center;
+}
+
+.portfolio-fields input,
+.portfolio-fields select {
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  background: rgba(236, 255, 247, 0.06);
+  color: var(--text);
+  padding: 0 10px;
+}
+
 .import-drop small,
-.import-summary small,
+.portfolio-stats small,
 .portfolio-photo-card span {
   color: var(--muted);
 }
 
-.import-summary {
+.portfolio-stats {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
-.import-summary div {
+.portfolio-stats div {
   display: grid;
   align-content: center;
   gap: 7px;
@@ -427,6 +449,14 @@ article {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.86rem;
+}
+
+.portfolio-photo-card em {
+  display: block;
+  margin-top: 4px;
+  color: var(--mint);
+  font-style: normal;
+  font-weight: 900;
 }
 
 .buy-actions {
@@ -983,6 +1013,14 @@ article {
     grid-template-columns: 1fr;
   }
 
+  .portfolio-form {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .portfolio-photo-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1043,7 +1081,8 @@ article {
     flex-direction: column;
   }
 
-  .import-summary,
+  .portfolio-fields,
+  .portfolio-stats,
   .portfolio-photo-grid {
     grid-template-columns: 1fr;
   }
