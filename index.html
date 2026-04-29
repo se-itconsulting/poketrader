@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PokeTrader</title>
-    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="styles.css?v=4" />
   </head>
   <body>
     <main class="app-shell">
@@ -43,6 +43,23 @@
         </div>
 
         <div class="search-results" id="searchResults"></div>
+      </section>
+
+      <section class="buy-panel" aria-label="Kaufbare Artikel">
+        <div class="panel-heading buy-heading">
+          <div>
+            <p class="eyebrow">Buy Radar</p>
+            <h2>Artikel, die man kaufen kann</h2>
+          </div>
+          <div class="buy-actions" role="group" aria-label="Kaufchancen filtern">
+            <button class="buy-filter active" data-buy-filter="all">Alle</button>
+            <button class="buy-filter" data-buy-filter="card">Karten</button>
+            <button class="buy-filter" data-buy-filter="sealed">Sealed</button>
+            <button class="buy-filter" data-buy-filter="graded">Graded</button>
+          </div>
+        </div>
+
+        <div class="deal-strip" id="dealStrip"></div>
       </section>
 
       <section class="catalog-panel" aria-label="Set Katalog">
@@ -165,6 +182,6 @@
       </section>
     </main>
 
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=4"></script>
   </body>
 </html>

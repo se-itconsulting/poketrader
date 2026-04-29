@@ -363,10 +363,62 @@ const catalogSets = [
   },
 ];
 
+const buyListings = [
+  {
+    id: "deal-151-bundle",
+    type: "sealed",
+    title: "Scarlet & Violet 151 Booster Bundle",
+    source: "eBay Buy It Now",
+    condition: "Sealed · English",
+    ask: "€ 49,90",
+    market: "€ 53",
+    score: 82,
+    edge: "+6%",
+    image: "https://images.unsplash.com/photo-1601987077677-5346c0c57d3f?auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    id: "deal-lugia-raw",
+    type: "card",
+    title: "Lugia V Alt Art",
+    source: "Cardmarket",
+    condition: "Raw · Near Mint · English",
+    ask: "€ 169,00",
+    market: "€ 182",
+    score: 76,
+    edge: "+7%",
+    image: "https://images.pokemontcg.io/swsh12/186_hires.png",
+  },
+  {
+    id: "deal-charizard-psa",
+    type: "graded",
+    title: "Charizard VMAX PSA 10",
+    source: "eBay Sold Comps",
+    condition: "PSA 10 · English",
+    ask: "€ 269,00",
+    market: "€ 286",
+    score: 71,
+    edge: "+6%",
+    image: "https://images.pokemontcg.io/swsh3/20_hires.png",
+  },
+  {
+    id: "deal-terastal-box",
+    type: "sealed",
+    title: "Terastal Festival ex Booster Box",
+    source: "Japan sealed",
+    condition: "Sealed · Japanese",
+    ask: "€ 84,00",
+    market: "€ 89",
+    score: 68,
+    edge: "+6%",
+    image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&w=500&q=80",
+  },
+];
+
 let activeLanguage = "english";
 let activeSetId = "sv3pt5";
 let activeCatalogView = "cards";
 let activeSearchType = "all";
+let activeBuyFilter = "all";
 
 const collection = [
   ["Charizard ex", "Obsidian Flames · Raw NM", "€ 74", "https://images.pokemontcg.io/sv3/125_hires.png"],
@@ -404,6 +456,35 @@ const catalogResults = document.querySelector("#catalogResults");
 const setSearch = document.querySelector("#setSearch");
 const globalSearch = document.querySelector("#globalSearch");
 const searchResults = document.querySelector("#searchResults");
+const dealStrip = document.querySelector("#dealStrip");
+
+function renderBuyListings() {
+  const listings = buyListings.filter((listing) => activeBuyFilter === "all" || listing.type === activeBuyFilter);
+
+  dealStrip.innerHTML = listings
+    .map(
+      (listing) => `
+        <article class="deal-card">
+          <img src="${listing.image}" alt="${listing.title}" loading="lazy" />
+          <div class="deal-copy">
+            <span class="deal-source">${listing.source}</span>
+            <h3>${listing.title}</h3>
+            <p>${listing.condition}</p>
+            <div class="deal-values">
+              <span><small>Kaufpreis</small><strong>${listing.ask}</strong></span>
+              <span><small>Markt</small><strong>${listing.market}</strong></span>
+              <span><small>Edge</small><strong>${listing.edge}</strong></span>
+            </div>
+          </div>
+          <div class="deal-side">
+            <span class="deal-score">${listing.score}</span>
+            <button class="watch-button" data-watch-id="${listing.id}">Watch</button>
+          </div>
+        </article>
+      `,
+    )
+    .join("");
+}
 
 function getSearchIndex() {
   const setResults = catalogSets.map((set) => ({
@@ -662,6 +743,36 @@ document.querySelectorAll(".search-filter").forEach((button) => {
   });
 });
 
+document.querySelectorAll(".buy-filter").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".buy-filter").forEach((filter) => filter.classList.remove("active"));
+    button.classList.add("active");
+    activeBuyFilter = button.dataset.buyFilter;
+    renderBuyListings();
+  });
+});
+
+dealStrip.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-watch-id]");
+  if (!button) return;
+
+  const listing = buyListings.find((item) => item.id === button.dataset.watchId);
+  if (!listing) return;
+
+  marketRows.ebay.unshift({
+    name: listing.title,
+    meta: `${listing.source} · ${listing.condition}`,
+    price: listing.ask,
+    change: listing.edge,
+    image: listing.image,
+  });
+  button.textContent = "Watching";
+  button.disabled = true;
+  document.querySelectorAll(".source").forEach((source) => source.classList.remove("active"));
+  document.querySelector('[data-source="ebay"]').classList.add("active");
+  renderTicker("ebay");
+});
+
 globalSearch.addEventListener("input", renderSearchResults);
 
 searchResults.addEventListener("click", (event) => {
@@ -789,6 +900,7 @@ chatForm.addEventListener("submit", (event) => {
 });
 
 renderTicker();
+renderBuyListings();
 renderCatalog();
 renderSearchResults();
 renderCollection();
