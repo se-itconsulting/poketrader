@@ -366,6 +366,7 @@ const catalogSets = [
 let activeLanguage = "english";
 let activeSetId = "sv3pt5";
 let activeCatalogView = "cards";
+let activeSearchType = "all";
 
 const collection = [
   ["Charizard ex", "Obsidian Flames · Raw NM", "€ 74", "https://images.pokemontcg.io/sv3/125_hires.png"],
@@ -401,6 +402,80 @@ const setList = document.querySelector("#setList");
 const setHero = document.querySelector("#setHero");
 const catalogResults = document.querySelector("#catalogResults");
 const setSearch = document.querySelector("#setSearch");
+const globalSearch = document.querySelector("#globalSearch");
+const searchResults = document.querySelector("#searchResults");
+
+function getSearchIndex() {
+  const setResults = catalogSets.map((set) => ({
+    type: "set",
+    title: set.name,
+    subtitle: `${set.code} · ${set.language === "english" ? "English" : "Japanese"} · ${set.totalCards} Karten`,
+    price: set.released,
+    source: "Set Database",
+    image: set.cards[0]?.image || set.products[0]?.image,
+    keywords: `${set.name} ${set.code} ${set.language} ${set.focus}`,
+    set,
+  }));
+
+  const cardResults = catalogSets.flatMap((set) =>
+    set.cards.map((card) => ({
+      type: "card",
+      title: card.name,
+      subtitle: `${set.name} · ${card.number} · ${card.rarity}`,
+      price: card.raw,
+      source: set.language === "english" ? "English cards" : "Japanese cards",
+      image: card.image,
+      keywords: `${card.name} ${card.number} ${card.rarity} ${set.name} ${set.code} ${set.language}`,
+      card,
+      set,
+    })),
+  );
+
+  const productResults = catalogSets.flatMap((set) =>
+    set.products.map((product) => ({
+      type: "product",
+      title: product.name,
+      subtitle: `${set.name} · ${product.type}`,
+      price: product.market,
+      source: "Sealed products",
+      image: product.image,
+      keywords: `${product.name} ${product.type} ${set.name} ${set.code} ${set.language}`,
+      product,
+      set,
+    })),
+  );
+
+  return [...cardResults, ...productResults, ...setResults];
+}
+
+function renderSearchResults() {
+  const query = globalSearch.value.trim().toLowerCase();
+  const results = getSearchIndex()
+    .filter((item) => activeSearchType === "all" || item.type === activeSearchType)
+    .filter((item) => !query || item.keywords.toLowerCase().includes(query))
+    .slice(0, 12);
+
+  if (!results.length) {
+    searchResults.innerHTML = `<div class="empty-state">Keine Treffer gefunden.</div>`;
+    return;
+  }
+
+  searchResults.innerHTML = results
+    .map(
+      (item) => `
+        <button class="search-result" data-result-type="${item.type}" data-result-title="${item.title}">
+          <img src="${item.image}" alt="${item.title}" loading="lazy" />
+          <span class="result-copy">
+            <small>${item.source}</small>
+            <strong>${item.title}</strong>
+            <em>${item.subtitle}</em>
+          </span>
+          <span class="result-price">${item.price}</span>
+        </button>
+      `,
+    )
+    .join("");
+}
 
 function getVisibleSets() {
   const query = setSearch.value.trim().toLowerCase();
@@ -578,6 +653,53 @@ document.querySelectorAll(".detail-tab").forEach((button) => {
   });
 });
 
+document.querySelectorAll(".search-filter").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".search-filter").forEach((filter) => filter.classList.remove("active"));
+    button.classList.add("active");
+    activeSearchType = button.dataset.searchType;
+    renderSearchResults();
+  });
+});
+
+globalSearch.addEventListener("input", renderSearchResults);
+
+searchResults.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-result-type]");
+  if (!button) return;
+
+  const title = button.dataset.resultTitle;
+  const result = getSearchIndex().find((item) => item.type === button.dataset.resultType && item.title === title);
+  if (!result) return;
+
+  if (result.type === "card") {
+    collection.unshift([result.card.name, `${result.set.name} · ${result.card.number}`, result.card.raw, result.card.image]);
+    renderCollection();
+  }
+
+  if (result.type === "product") {
+    marketRows.sealed.unshift({
+      name: result.product.name,
+      meta: `${result.set.name} · ${result.product.type}`,
+      price: result.product.market,
+      change: "+0,0%",
+      image: result.product.image,
+    });
+    document.querySelectorAll(".source").forEach((source) => source.classList.remove("active"));
+    document.querySelector('[data-source="sealed"]').classList.add("active");
+    renderTicker("sealed");
+  }
+
+  if (result.type === "set") {
+    activeLanguage = result.set.language;
+    activeSetId = result.set.id;
+    document.querySelectorAll(".segment").forEach((segment) => {
+      segment.classList.toggle("active", segment.dataset.language === activeLanguage);
+    });
+    renderCatalog();
+  }
+});
+
 setSearch.addEventListener("input", renderCatalog);
 
 setList.addEventListener("click", (event) => {
@@ -668,5 +790,6 @@ chatForm.addEventListener("submit", (event) => {
 
 renderTicker();
 renderCatalog();
+renderSearchResults();
 renderCollection();
 renderGrades();

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PokeTrader</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=3" />
   </head>
   <body>
     <main class="app-shell">
@@ -17,6 +17,32 @@
           <span>Portfolio</span>
           <strong id="portfolioValue">€ 8.742</strong>
         </div>
+      </section>
+
+      <section class="search-panel" aria-label="Artikel und Karten suchen">
+        <div class="panel-heading search-heading">
+          <div>
+            <p class="eyebrow">Market Search</p>
+            <h2>Artikel, Karten und Sets suchen</h2>
+          </div>
+          <span class="live-pill">API-ready</span>
+        </div>
+
+        <div class="search-console">
+          <label class="global-search">
+            <span>Suche</span>
+            <input id="globalSearch" type="search" placeholder="Charizard, Booster Box, 151, Lugia..." />
+          </label>
+
+          <div class="search-filters" role="group" aria-label="Suchtyp wählen">
+            <button class="search-filter active" data-search-type="all">Alles</button>
+            <button class="search-filter" data-search-type="card">Karten</button>
+            <button class="search-filter" data-search-type="product">Produkte</button>
+            <button class="search-filter" data-search-type="set">Sets</button>
+          </div>
+        </div>
+
+        <div class="search-results" id="searchResults"></div>
       </section>
 
       <section class="catalog-panel" aria-label="Set Katalog">
@@ -139,6 +165,6 @@
       </section>
     </main>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=3"></script>
   </body>
 </html>
