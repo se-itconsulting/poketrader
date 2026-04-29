@@ -132,6 +132,15 @@ h2 {
   box-shadow: var(--shadow);
 }
 
+.portfolio-import-panel {
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(87, 242, 183, 0.09), transparent 38%),
+    var(--panel);
+  box-shadow: var(--shadow);
+}
+
 article {
   border: 1px solid var(--line);
   background: var(--panel);
@@ -319,6 +328,105 @@ article {
 
 .buy-heading {
   align-items: end;
+}
+
+.import-heading {
+  align-items: end;
+}
+
+.import-meter {
+  display: grid;
+  gap: 4px;
+  min-width: 150px;
+  padding: 12px 14px;
+  border: 1px solid rgba(87, 242, 183, 0.38);
+  background: rgba(87, 242, 183, 0.1);
+}
+
+.import-meter span {
+  color: var(--mint);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.import-console {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) 1fr;
+  gap: 14px;
+  padding: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.import-drop {
+  display: grid;
+  gap: 8px;
+  min-height: 132px;
+  align-content: center;
+  padding: 18px;
+  border: 1px dashed rgba(87, 242, 183, 0.55);
+  background: rgba(87, 242, 183, 0.08);
+  cursor: pointer;
+}
+
+.import-drop input {
+  display: none;
+}
+
+.import-drop span {
+  color: var(--mint);
+  font-weight: 950;
+}
+
+.import-drop small,
+.import-summary small,
+.portfolio-photo-card span {
+  color: var(--muted);
+}
+
+.import-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.import-summary div {
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: rgba(8, 16, 13, 0.42);
+}
+
+.portfolio-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  padding: 18px;
+}
+
+.portfolio-photo-card {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(236, 255, 247, 0.055);
+  box-shadow: none;
+}
+
+.portfolio-photo-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: rgba(8, 16, 13, 0.55);
+}
+
+.portfolio-photo-card strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.86rem;
 }
 
 .buy-actions {
@@ -871,6 +979,14 @@ article {
     grid-template-columns: 1fr;
   }
 
+  .import-console {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-photo-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .catalog-layout {
     grid-template-columns: 1fr;
   }
@@ -921,9 +1037,15 @@ article {
   .catalog-heading,
   .search-heading,
   .buy-heading,
+  .import-heading,
   .set-hero {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .import-summary,
+  .portfolio-photo-grid {
+    grid-template-columns: 1fr;
   }
 
   .deal-card {

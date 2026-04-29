@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PokeTrader</title>
-    <link rel="stylesheet" href="styles.css?v=4" />
+    <link rel="stylesheet" href="styles.css?v=5" />
   </head>
   <body>
     <main class="app-shell">
@@ -60,6 +60,42 @@
         </div>
 
         <div class="deal-strip" id="dealStrip"></div>
+      </section>
+
+      <section class="portfolio-import-panel" aria-label="Aktuelles Portfolio importieren">
+        <div class="panel-heading import-heading">
+          <div>
+            <p class="eyebrow">My Portfolio</p>
+            <h2>Aktueller Bestand per Fotos</h2>
+          </div>
+          <div class="import-meter" aria-label="Erfassungsfortschritt">
+            <span id="portfolioProgressText">ca. 1% erfasst</span>
+            <strong id="importCount">0 Fotos</strong>
+          </div>
+        </div>
+
+        <div class="import-console">
+          <label class="import-drop" for="portfolioPhotos">
+            <input id="portfolioPhotos" type="file" accept="image/*,.heic,.HEIC" multiple />
+            <span>Portfolio-Fotos auswählen</span>
+            <small>Lokale Vorschau für HEIC/JPG/PNG, ohne Upload.</small>
+          </label>
+
+          <div class="import-summary">
+            <div>
+              <small>Status</small>
+              <strong>Unsortierter Eingang</strong>
+            </div>
+            <div>
+              <small>Nächster Schritt</small>
+              <strong>Auto-Erkennung je Bild</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-photo-grid" id="portfolioPhotoGrid">
+          <div class="empty-state">Wähle deine Portfolio-Fotos aus, dann erscheinen sie hier als lokale Import-Vorschau.</div>
+        </div>
       </section>
 
       <section class="catalog-panel" aria-label="Set Katalog">
@@ -182,6 +218,6 @@
       </section>
     </main>
 
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=5"></script>
   </body>
 </html>

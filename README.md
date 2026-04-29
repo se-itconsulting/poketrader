@@ -7,6 +7,7 @@ Mobile-first Web-App-Prototyp für ein Pokémon-Portfolio mit Foto-Scan, Set-/Ka
 - Dashboard für Portfolio-Wert, Sammlung, Märkte und Grading-Matrix
 - Suchseite für Artikel, Karten, Sets und Sealed-Produkte
 - Buy-Radar für kaufbare Listings mit Deal-Score, Marktpreis und Watchlist-Aktion
+- Lokaler Portfolio-Fotoimport mit ca. 1%-Erfassungsstatus, ohne Bilder hochzuladen
 - Set-Katalog mit English/Japanese Filter, Set-Auswahl, Kartenliste und Sealed-Produkten
 - Kamera-/Foto-Upload über `accept="image/*"` und `capture="environment"`
 - UI-Platzhalter für Pokémon TCG API, eBay Browse API, Cardmarket und Sealed-Produkte

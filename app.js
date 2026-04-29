@@ -457,6 +457,36 @@ const setSearch = document.querySelector("#setSearch");
 const globalSearch = document.querySelector("#globalSearch");
 const searchResults = document.querySelector("#searchResults");
 const dealStrip = document.querySelector("#dealStrip");
+const portfolioPhotos = document.querySelector("#portfolioPhotos");
+const portfolioPhotoGrid = document.querySelector("#portfolioPhotoGrid");
+const importCount = document.querySelector("#importCount");
+const portfolioProgressText = document.querySelector("#portfolioProgressText");
+
+function renderPortfolioPhotos(files) {
+  if (!files.length) {
+    portfolioPhotoGrid.innerHTML = `<div class="empty-state">Wähle deine Portfolio-Fotos aus, dann erscheinen sie hier als lokale Import-Vorschau.</div>`;
+    importCount.textContent = "0 Fotos";
+    portfolioProgressText.textContent = "ca. 1% erfasst";
+    return;
+  }
+
+  importCount.textContent = `${files.length} Fotos`;
+  portfolioProgressText.textContent = "ca. 1% erfasst";
+  portfolioPhotoGrid.innerHTML = files
+    .map((file, index) => {
+      const url = URL.createObjectURL(file);
+      return `
+        <article class="portfolio-photo-card">
+          <img src="${url}" alt="Portfolio Foto ${index + 1}" loading="lazy" />
+          <div>
+            <strong>${file.name}</strong>
+            <span>Wartet auf Karten-Erkennung</span>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
 
 function renderBuyListings() {
   const listings = buyListings.filter((listing) => activeBuyFilter === "all" || listing.type === activeBuyFilter);
@@ -771,6 +801,10 @@ dealStrip.addEventListener("click", (event) => {
   document.querySelectorAll(".source").forEach((source) => source.classList.remove("active"));
   document.querySelector('[data-source="ebay"]').classList.add("active");
   renderTicker("ebay");
+});
+
+portfolioPhotos.addEventListener("change", () => {
+  renderPortfolioPhotos(Array.from(portfolioPhotos.files || []));
 });
 
 globalSearch.addEventListener("input", renderSearchResults);
