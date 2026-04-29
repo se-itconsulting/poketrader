@@ -93,6 +93,280 @@ const marketRows = {
   ],
 };
 
+const catalogSets = [
+  {
+    id: "sv3pt5",
+    language: "english",
+    name: "Scarlet & Violet 151",
+    code: "SV3.5",
+    released: "2023",
+    totalCards: 207,
+    focus: "English master set, nostalgia demand, strong sealed liquidity",
+    cards: [
+      {
+        name: "Charizard ex",
+        number: "199/165",
+        rarity: "Special Illustration Rare",
+        raw: "€ 118",
+        psa10: "€ 520",
+        image: "https://images.pokemontcg.io/sv3pt5/199_hires.png",
+      },
+      {
+        name: "Blastoise ex",
+        number: "200/165",
+        rarity: "Special Illustration Rare",
+        raw: "€ 52",
+        psa10: "€ 238",
+        image: "https://images.pokemontcg.io/sv3pt5/200_hires.png",
+      },
+      {
+        name: "Venusaur ex",
+        number: "198/165",
+        rarity: "Special Illustration Rare",
+        raw: "€ 43",
+        psa10: "€ 214",
+        image: "https://images.pokemontcg.io/sv3pt5/198_hires.png",
+      },
+      {
+        name: "Pikachu",
+        number: "173/165",
+        rarity: "Illustration Rare",
+        raw: "€ 29",
+        psa10: "€ 156",
+        image: "https://images.pokemontcg.io/sv3pt5/173_hires.png",
+      },
+    ],
+    products: [
+      {
+        name: "151 Ultra-Premium Collection",
+        type: "Sealed box",
+        market: "€ 146",
+        image: "https://images.unsplash.com/photo-1601987077677-5346c0c57d3f?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        name: "151 Booster Bundle",
+        type: "Sealed booster bundle",
+        market: "€ 53",
+        image: "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        name: "151 Elite Trainer Box",
+        type: "ETB",
+        market: "€ 64",
+        image: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&w=500&q=80",
+      },
+    ],
+  },
+  {
+    id: "swsh7",
+    language: "english",
+    name: "Evolving Skies",
+    code: "SWSH7",
+    released: "2021",
+    totalCards: 237,
+    focus: "English chase set with heavy Eeveelution demand",
+    cards: [
+      {
+        name: "Umbreon VMAX",
+        number: "215/203",
+        rarity: "Alternate Art Secret",
+        raw: "€ 812",
+        psa10: "€ 2.250",
+        image: "https://images.pokemontcg.io/swsh7/215_hires.png",
+      },
+      {
+        name: "Rayquaza VMAX",
+        number: "218/203",
+        rarity: "Alternate Art Secret",
+        raw: "€ 392",
+        psa10: "€ 1.080",
+        image: "https://images.pokemontcg.io/swsh7/218_hires.png",
+      },
+      {
+        name: "Sylveon VMAX",
+        number: "212/203",
+        rarity: "Alternate Art Secret",
+        raw: "€ 164",
+        psa10: "€ 468",
+        image: "https://images.pokemontcg.io/swsh7/212_hires.png",
+      },
+      {
+        name: "Leafeon VMAX",
+        number: "205/203",
+        rarity: "Alternate Art Secret",
+        raw: "€ 198",
+        psa10: "€ 610",
+        image: "https://images.pokemontcg.io/swsh7/205_hires.png",
+      },
+    ],
+    products: [
+      {
+        name: "Evolving Skies Booster Box",
+        type: "36 pack booster box",
+        market: "€ 820",
+        image: "https://images.unsplash.com/photo-1606503153255-59d8b8b82176?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        name: "Elite Trainer Box Set",
+        type: "ETB pair",
+        market: "€ 245",
+        image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&w=500&q=80",
+      },
+    ],
+  },
+  {
+    id: "swsh12",
+    language: "english",
+    name: "Silver Tempest",
+    code: "SWSH12",
+    released: "2022",
+    totalCards: 245,
+    focus: "English Lugia chase, solid liquidity for sealed boxes",
+    cards: [
+      {
+        name: "Lugia V",
+        number: "186/195",
+        rarity: "Alternate Full Art",
+        raw: "€ 182",
+        psa10: "€ 326",
+        image: "https://images.pokemontcg.io/swsh12/186_hires.png",
+      },
+      {
+        name: "Regidrago V",
+        number: "184/195",
+        rarity: "Alternate Full Art",
+        raw: "€ 24",
+        psa10: "€ 118",
+        image: "https://images.pokemontcg.io/swsh12/184_hires.png",
+      },
+      {
+        name: "Unown V",
+        number: "177/195",
+        rarity: "Alternate Full Art",
+        raw: "€ 28",
+        psa10: "€ 122",
+        image: "https://images.pokemontcg.io/swsh12/177_hires.png",
+      },
+    ],
+    products: [
+      {
+        name: "Silver Tempest Booster Box",
+        type: "36 pack booster box",
+        market: "€ 178",
+        image: "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        name: "Build & Battle Stadium",
+        type: "Sealed product",
+        market: "€ 58",
+        image: "https://images.unsplash.com/photo-1601987077677-5346c0c57d3f?auto=format&fit=crop&w=500&q=80",
+      },
+    ],
+  },
+  {
+    id: "sv2a",
+    language: "japanese",
+    name: "Pokemon Card 151",
+    code: "SV2a",
+    released: "2023",
+    totalCards: 210,
+    focus: "Japanese 151 master balls, high collector demand",
+    cards: [
+      {
+        name: "Charizard ex",
+        number: "201/165",
+        rarity: "SAR",
+        raw: "€ 96",
+        psa10: "€ 430",
+        image: "https://images.pokemontcg.io/sv3pt5/199_hires.png",
+      },
+      {
+        name: "Pikachu",
+        number: "025/165",
+        rarity: "Master Ball Reverse",
+        raw: "€ 145",
+        psa10: "€ 540",
+        image: "https://images.pokemontcg.io/sv3pt5/25_hires.png",
+      },
+      {
+        name: "Erika's Invitation",
+        number: "206/165",
+        rarity: "SAR",
+        raw: "€ 88",
+        psa10: "€ 360",
+        image: "https://images.pokemontcg.io/sv3pt5/203_hires.png",
+      },
+    ],
+    products: [
+      {
+        name: "Pokemon Card 151 Booster Box",
+        type: "Japanese sealed box",
+        market: "€ 128",
+        image: "https://images.unsplash.com/photo-1606503153255-59d8b8b82176?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        name: "151 File Set",
+        type: "Japanese sealed accessory product",
+        market: "€ 42",
+        image: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&w=500&q=80",
+      },
+    ],
+  },
+  {
+    id: "sv8a",
+    language: "japanese",
+    name: "Terastal Festival ex",
+    code: "SV8a",
+    released: "2024",
+    totalCards: 237,
+    focus: "Japanese high-class pack with Eeveelution chase cards",
+    cards: [
+      {
+        name: "Umbreon ex",
+        number: "217/187",
+        rarity: "SAR",
+        raw: "€ 118",
+        psa10: "€ 520",
+        image: "https://images.pokemontcg.io/sv8pt5/60_hires.png",
+      },
+      {
+        name: "Sylveon ex",
+        number: "212/187",
+        rarity: "SAR",
+        raw: "€ 84",
+        psa10: "€ 318",
+        image: "https://images.pokemontcg.io/sv8pt5/156_hires.png",
+      },
+      {
+        name: "Leafeon ex",
+        number: "200/187",
+        rarity: "SAR",
+        raw: "€ 72",
+        psa10: "€ 280",
+        image: "https://images.pokemontcg.io/sv8pt5/144_hires.png",
+      },
+    ],
+    products: [
+      {
+        name: "Terastal Festival ex Booster Box",
+        type: "Japanese high-class sealed box",
+        market: "€ 89",
+        image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        name: "Sealed Case",
+        type: "20 box case",
+        market: "€ 1.720",
+        image: "https://images.unsplash.com/photo-1601987077677-5346c0c57d3f?auto=format&fit=crop&w=500&q=80",
+      },
+    ],
+  },
+];
+
+let activeLanguage = "english";
+let activeSetId = "sv3pt5";
+let activeCatalogView = "cards";
+
 const collection = [
   ["Charizard ex", "Obsidian Flames · Raw NM", "€ 74", "https://images.pokemontcg.io/sv3/125_hires.png"],
   ["Umbreon VMAX", "Evolving Skies · PSA 9", "€ 812", "https://images.pokemontcg.io/swsh7/215_hires.png"],
@@ -123,6 +397,107 @@ const recognitionText = document.querySelector("#recognitionText");
 const chatForm = document.querySelector("#chatForm");
 const chatMessage = document.querySelector("#chatMessage");
 const chatLog = document.querySelector("#chatLog");
+const setList = document.querySelector("#setList");
+const setHero = document.querySelector("#setHero");
+const catalogResults = document.querySelector("#catalogResults");
+const setSearch = document.querySelector("#setSearch");
+
+function getVisibleSets() {
+  const query = setSearch.value.trim().toLowerCase();
+  return catalogSets.filter((set) => {
+    const matchesLanguage = set.language === activeLanguage;
+    const matchesQuery = !query || `${set.name} ${set.code}`.toLowerCase().includes(query);
+    return matchesLanguage && matchesQuery;
+  });
+}
+
+function getActiveSet() {
+  return catalogSets.find((set) => set.id === activeSetId) || getVisibleSets()[0] || catalogSets[0];
+}
+
+function renderSetList() {
+  const visibleSets = getVisibleSets();
+  if (!visibleSets.some((set) => set.id === activeSetId) && visibleSets[0]) {
+    activeSetId = visibleSets[0].id;
+  }
+
+  setList.innerHTML = visibleSets
+    .map(
+      (set) => `
+        <button class="set-option ${set.id === activeSetId ? "active" : ""}" data-set-id="${set.id}">
+          <span>
+            <strong>${set.name}</strong>
+            <small>${set.code} · ${set.totalCards} cards · ${set.released}</small>
+          </span>
+          <span>${set.language === "english" ? "EN" : "JP"}</span>
+        </button>
+      `,
+    )
+    .join("");
+
+  if (!visibleSets.length) {
+    setList.innerHTML = `<div class="empty-state">Kein Set gefunden.</div>`;
+  }
+}
+
+function renderSetHero() {
+  const set = getActiveSet();
+  setHero.innerHTML = `
+    <div>
+      <p class="eyebrow">${set.language === "english" ? "English priority" : "Japanese catalog"}</p>
+      <h3>${set.name}</h3>
+      <p>${set.focus}</p>
+    </div>
+    <div class="set-stats">
+      <span>${set.code}</span>
+      <strong>${set.totalCards}</strong>
+      <small>Karten</small>
+    </div>
+  `;
+}
+
+function renderCatalogResults() {
+  const set = getActiveSet();
+  const items = set[activeCatalogView];
+  const isCards = activeCatalogView === "cards";
+
+  catalogResults.className = isCards ? "catalog-results card-catalog" : "catalog-results product-catalog";
+  catalogResults.innerHTML = items
+    .map((item) => {
+      if (isCards) {
+        return `
+          <button class="catalog-card" data-card-name="${item.name}">
+            <img src="${item.image}" alt="${item.name}" loading="lazy" />
+            <span class="card-number">${item.number}</span>
+            <strong>${item.name}</strong>
+            <small>${item.rarity}</small>
+            <div class="value-row">
+              <span>Raw ${item.raw}</span>
+              <span>PSA 10 ${item.psa10}</span>
+            </div>
+          </button>
+        `;
+      }
+
+      return `
+        <button class="product-card" data-product-name="${item.name}">
+          <img src="${item.image}" alt="${item.name}" loading="lazy" />
+          <span>
+            <strong>${item.name}</strong>
+            <small>${item.type}</small>
+          </span>
+          <em>${item.market}</em>
+        </button>
+      `;
+    })
+    .join("");
+}
+
+function renderCatalog() {
+  renderSetList();
+  renderSetHero();
+  renderCatalogResults();
+}
 
 function renderTicker(source = "pokemon") {
   ticker.innerHTML = marketRows[source]
@@ -185,6 +560,64 @@ document.querySelectorAll(".source").forEach((button) => {
   });
 });
 
+document.querySelectorAll(".segment").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".segment").forEach((segment) => segment.classList.remove("active"));
+    button.classList.add("active");
+    activeLanguage = button.dataset.language;
+    renderCatalog();
+  });
+});
+
+document.querySelectorAll(".detail-tab").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".detail-tab").forEach((tab) => tab.classList.remove("active"));
+    button.classList.add("active");
+    activeCatalogView = button.dataset.view;
+    renderCatalogResults();
+  });
+});
+
+setSearch.addEventListener("input", renderCatalog);
+
+setList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-set-id]");
+  if (!button) return;
+
+  activeSetId = button.dataset.setId;
+  renderCatalog();
+});
+
+catalogResults.addEventListener("click", (event) => {
+  const cardButton = event.target.closest("[data-card-name]");
+  const productButton = event.target.closest("[data-product-name]");
+  const set = getActiveSet();
+
+  if (cardButton) {
+    const card = set.cards.find((item) => item.name === cardButton.dataset.cardName);
+    if (!card) return;
+
+    collection.unshift([card.name, `${set.name} · ${card.number}`, card.raw, card.image]);
+    renderCollection();
+  }
+
+  if (productButton) {
+    const product = set.products.find((item) => item.name === productButton.dataset.productName);
+    if (!product) return;
+
+    marketRows.sealed.unshift({
+      name: product.name,
+      meta: `${set.name} · ${product.type}`,
+      price: product.market,
+      change: "+0,0%",
+      image: product.image,
+    });
+    document.querySelectorAll(".source").forEach((source) => source.classList.remove("active"));
+    document.querySelector('[data-source="sealed"]').classList.add("active");
+    renderTicker("sealed");
+  }
+});
+
 scanInput.addEventListener("change", () => {
   const file = scanInput.files?.[0];
   if (!file) return;
@@ -234,5 +667,6 @@ chatForm.addEventListener("submit", (event) => {
 });
 
 renderTicker();
+renderCatalog();
 renderCollection();
 renderGrades();

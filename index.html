@@ -19,6 +19,40 @@
         </div>
       </section>
 
+      <section class="catalog-panel" aria-label="Set Katalog">
+        <div class="panel-heading catalog-heading">
+          <div>
+            <p class="eyebrow">Set Database</p>
+            <h2>Alle Sets, Karten und Produkte</h2>
+          </div>
+          <div class="catalog-actions" role="group" aria-label="Sprache wählen">
+            <button class="segment active" data-language="english">English</button>
+            <button class="segment" data-language="japanese">Japanese</button>
+          </div>
+        </div>
+
+        <div class="catalog-layout">
+          <aside class="set-browser" aria-label="Sets auswählen">
+            <label class="search-field">
+              <span>Set suchen</span>
+              <input id="setSearch" type="search" placeholder="z. B. 151, Evolving Skies" />
+            </label>
+            <div class="set-list" id="setList"></div>
+          </aside>
+
+          <div class="set-detail">
+            <div class="set-hero" id="setHero"></div>
+
+            <div class="detail-tabs" role="group" aria-label="Katalog Ansicht">
+              <button class="detail-tab active" data-view="cards">Karten</button>
+              <button class="detail-tab" data-view="products">Produkte</button>
+            </div>
+
+            <div class="catalog-results" id="catalogResults"></div>
+          </div>
+        </div>
+      </section>
+
       <section class="dashboard-grid">
         <article class="scanner-panel">
           <div class="panel-heading">
