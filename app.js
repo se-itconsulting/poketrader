@@ -471,6 +471,13 @@ const portfolioProgressText = document.querySelector("#portfolioProgressText");
 const ownPortfolioValue = document.querySelector("#ownPortfolioValue");
 
 const ownPortfolioItems = [];
+const analysisSuggestions = [
+  { name: "Charizard ex", type: "Karte", condition: "Raw NM", value: 118 },
+  { name: "Lugia V Alt Art", type: "Karte", condition: "Raw NM", value: 182 },
+  { name: "151 Booster Bundle", type: "Sealed", condition: "Sealed", value: 53 },
+  { name: "Umbreon VMAX", type: "Graded", condition: "PSA 9", value: 812 },
+  { name: "Terastal Festival ex Booster Box", type: "Sealed", condition: "Sealed", value: 89 },
+];
 
 function formatEuro(value) {
   return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
@@ -484,7 +491,7 @@ function renderOwnPortfolio() {
   portfolioProgressText.textContent = ownPortfolioItems.length ? "ca. 1% erfasst" : "0% erfasst";
 
   if (!ownPortfolioItems.length) {
-    portfolioPhotoGrid.innerHTML = `<div class="empty-state">Lade ein Bild hoch und lege deine erste Portfolio-Position an.</div>`;
+    portfolioPhotoGrid.innerHTML = `<div class="empty-state">Lade mehrere Bilder hoch, dann erscheinen sie hier als Analyse-Queue.</div>`;
     return;
   }
 
@@ -494,6 +501,7 @@ function renderOwnPortfolio() {
         <article class="portfolio-photo-card">
           <img src="${item.image}" alt="${item.name}" loading="lazy" />
           <div>
+            <small class="analysis-status">${item.status}</small>
             <strong>${item.name}</strong>
             <span>${item.type} · ${item.condition} · ${item.quantity}x</span>
             <em>${formatEuro(item.value * item.quantity)}</em>
@@ -820,37 +828,49 @@ dealStrip.addEventListener("click", (event) => {
 });
 
 portfolioPhoto.addEventListener("change", () => {
-  const file = portfolioPhoto.files?.[0];
-  portfolioFileName.textContent = file ? file.name : "HEIC/JPG/PNG lokal auswählen";
+  const files = Array.from(portfolioPhoto.files || []);
+  portfolioFileName.textContent = files.length
+    ? `${files.length} Datei${files.length === 1 ? "" : "en"} ausgewählt`
+    : "Mehrere HEIC/JPG/PNG lokal auswählen";
 });
 
 portfolioForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const file = portfolioPhoto.files?.[0];
-  const value = Number(portfolioValueInput.value);
-  const quantity = Number(portfolioQuantity.value || 1);
+  const files = Array.from(portfolioPhoto.files || []);
+  const overrideValue = Number(portfolioValueInput.value);
+  const quantity = Math.max(1, Number(portfolioQuantity.value || 1));
+  const fallbackFiles = files.length ? files : [null];
 
-  if (!portfolioName.value.trim() || !Number.isFinite(value) || value < 0) return;
+  fallbackFiles.forEach((file, index) => {
+    const suggestion = analysisSuggestions[(ownPortfolioItems.length + index) % analysisSuggestions.length];
+    const name = portfolioName.value.trim() || suggestion.name;
+    const value = Number.isFinite(overrideValue) && overrideValue > 0 ? overrideValue : suggestion.value;
+    const type = portfolioType.value || suggestion.type;
+    const condition = portfolioCondition.value || suggestion.condition;
+    const image = file ? URL.createObjectURL(file) : "https://images.pokemontcg.io/sv3pt5/25_hires.png";
+    const status = file ? "Analysiert lokal · Vorschlag" : "Manuell erfasst";
 
-  ownPortfolioItems.unshift({
-    name: portfolioName.value.trim(),
-    type: portfolioType.value,
-    condition: portfolioCondition.value,
-    quantity: Math.max(1, quantity),
-    value,
-    image: file ? URL.createObjectURL(file) : "https://images.pokemontcg.io/sv3pt5/25_hires.png",
+    ownPortfolioItems.unshift({
+      name,
+      type,
+      condition,
+      quantity,
+      value,
+      image,
+      status,
+    });
+
+    collection.unshift([
+      name,
+      `${type} · ${condition} · Eigenes Portfolio`,
+      formatEuro(value * quantity),
+      image,
+    ]);
   });
-
-  collection.unshift([
-    portfolioName.value.trim(),
-    `${portfolioType.value} · ${portfolioCondition.value} · Eigenes Portfolio`,
-    formatEuro(value * Math.max(1, quantity)),
-    ownPortfolioItems[0].image,
-  ]);
 
   portfolioForm.reset();
   portfolioQuantity.value = "1";
-  portfolioFileName.textContent = "HEIC/JPG/PNG lokal auswählen";
+  portfolioFileName.textContent = "Mehrere HEIC/JPG/PNG lokal auswählen";
   renderOwnPortfolio();
   renderCollection();
 });

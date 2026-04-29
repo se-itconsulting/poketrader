@@ -451,6 +451,14 @@ article {
   font-size: 0.86rem;
 }
 
+.analysis-status {
+  display: inline-block;
+  margin-bottom: 4px;
+  color: var(--yellow);
+  font-size: 0.74rem;
+  font-weight: 900;
+}
+
 .portfolio-photo-card em {
   display: block;
   margin-top: 4px;

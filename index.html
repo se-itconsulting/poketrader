@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PokeTrader</title>
-    <link rel="stylesheet" href="styles.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=7" />
   </head>
   <body>
     <main class="app-shell">
@@ -77,13 +77,13 @@
         <div class="import-console">
           <form class="portfolio-form" id="portfolioForm">
             <label class="import-drop" for="portfolioPhoto">
-              <input id="portfolioPhoto" type="file" accept="image/*,.heic,.HEIC" />
-              <span>Bild hochladen</span>
-              <small id="portfolioFileName">HEIC/JPG/PNG lokal auswählen</small>
+              <input id="portfolioPhoto" type="file" accept="image/*,.heic,.HEIC" multiple />
+              <span>Bilder hochladen</span>
+              <small id="portfolioFileName">Mehrere HEIC/JPG/PNG lokal auswählen</small>
             </label>
 
             <div class="portfolio-fields">
-              <input id="portfolioName" type="text" placeholder="Name, z. B. Lugia V Alt Art" required />
+              <input id="portfolioName" type="text" placeholder="Optionaler Name für alle Bilder" />
               <select id="portfolioType" aria-label="Typ">
                 <option value="Karte">Karte</option>
                 <option value="Sealed">Sealed</option>
@@ -98,8 +98,8 @@
                 <option value="Sealed">Sealed</option>
               </select>
               <input id="portfolioQuantity" type="number" min="1" value="1" aria-label="Menge" />
-              <input id="portfolioValueInput" type="number" min="0" step="0.01" placeholder="Wert €" required />
-              <button class="primary-button" type="submit">In Portfolio</button>
+              <input id="portfolioValueInput" type="number" min="0" step="0.01" placeholder="Wert €" />
+              <button class="primary-button" type="submit">Analysieren</button>
             </div>
           </form>
 
@@ -110,17 +110,17 @@
             </div>
             <div>
               <small>Upload-Status</small>
-              <strong>Lokal im Browser</strong>
+              <strong>Batch lokal</strong>
             </div>
             <div>
               <small>Nächster Schritt</small>
-              <strong>Auto-Matching</strong>
+              <strong>Vision-Erkennung</strong>
             </div>
           </div>
         </div>
 
         <div class="portfolio-photo-grid" id="portfolioPhotoGrid">
-          <div class="empty-state">Lade ein Bild hoch und lege deine erste Portfolio-Position an.</div>
+          <div class="empty-state">Lade mehrere Bilder hoch, dann erscheinen sie hier als Analyse-Queue.</div>
         </div>
       </section>
 
@@ -244,6 +244,6 @@
       </section>
     </main>
 
-    <script src="app.js?v=6"></script>
+    <script src="app.js?v=7"></script>
   </body>
 </html>
