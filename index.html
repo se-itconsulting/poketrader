@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PokeTrader</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-label="Portfolio Zusammenfassung">
+        <div>
+          <p class="eyebrow">PokeTrader</p>
+          <h1>Sammlung, Preise und Scans in einem Cockpit.</h1>
+        </div>
+        <div class="portfolio-value">
+          <span>Portfolio</span>
+          <strong id="portfolioValue">€ 8.742</strong>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="scanner-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Scanner</p>
+              <h2>Karte fotografieren</h2>
+            </div>
+            <button class="icon-button" id="clearScan" title="Scan zurücksetzen" aria-label="Scan zurücksetzen">↺</button>
+          </div>
+
+          <label class="capture-zone" for="cardPhoto">
+            <input id="cardPhoto" type="file" accept="image/*" capture="environment" />
+            <img id="scanPreview" alt="" />
+            <span id="captureHint">Foto aufnehmen</span>
+          </label>
+
+          <div class="recognition-card">
+            <span class="status-dot"></span>
+            <div>
+              <strong id="recognitionTitle">Bereit für Kartenerkennung</strong>
+              <p id="recognitionText">OCR, Set-Code und Nummer werden später über Vision/TCG-Daten abgeglichen.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="market-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Live Märkte</p>
+              <h2>Preisquellen</h2>
+            </div>
+            <span class="live-pill">Live-ready</span>
+          </div>
+
+          <div class="source-list">
+            <button class="source active" data-source="pokemon">Pokémon TCG API</button>
+            <button class="source" data-source="ebay">eBay Browse</button>
+            <button class="source" data-source="cardmarket">Cardmarket</button>
+            <button class="source" data-source="sealed">Sealed Produkte</button>
+          </div>
+
+          <div class="price-ticker" id="priceTicker"></div>
+        </article>
+
+        <article class="collection-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Collection</p>
+              <h2>Meine Highlights</h2>
+            </div>
+            <button class="primary-button" id="addCard">+ Karte</button>
+          </div>
+
+          <div class="card-list" id="cardList"></div>
+        </article>
+
+        <article class="grade-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Bewertung</p>
+              <h2>Raw bis PSA 10</h2>
+            </div>
+          </div>
+          <div class="grade-matrix" id="gradeMatrix"></div>
+        </article>
+
+        <article class="chat-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Assistent</p>
+              <h2>Portfolio Chat</h2>
+            </div>
+          </div>
+
+          <div class="chat-log" id="chatLog">
+            <div class="bot-message">Frag mich nach Sets, Marktwerten, Grading-Potenzial oder was du als nächstes scannen solltest.</div>
+          </div>
+
+          <form class="chat-input" id="chatForm">
+            <input id="chatMessage" type="text" autocomplete="off" placeholder="z. B. Welche Karten lohnen PSA 9+?" />
+            <button type="submit">Senden</button>
+          </form>
+        </article>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
