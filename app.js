@@ -484,12 +484,32 @@ function formatEuro(value) {
   return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
 }
 
-function renderOwnPortfolio() {
-  const totalValue = ownPortfolioItems.reduce((sum, item) => sum + item.value * item.quantity, 0);
+function syncCollectionFromPortfolio() {
+  for (let index = collection.length - 1; index >= 0; index -= 1) {
+    if (String(collection[index][4] || "").startsWith("portfolio:")) {
+      collection.splice(index, 1);
+    }
+  }
 
-  portfolioItemCount.textContent = `${ownPortfolioItems.length} Position${ownPortfolioItems.length === 1 ? "" : "en"}`;
+  ownPortfolioItems.forEach((item) => {
+    if (item.reviewStatus === "rejected") return;
+    collection.push([
+      item.name,
+      `${item.type} · ${item.condition} · Eigenes Portfolio`,
+      formatEuro(item.value * item.quantity),
+      item.image,
+      `portfolio:${item.id}`,
+    ]);
+  });
+}
+
+function renderOwnPortfolio() {
+  const activeItems = ownPortfolioItems.filter((item) => item.reviewStatus !== "rejected");
+  const totalValue = activeItems.reduce((sum, item) => sum + item.value * item.quantity, 0);
+
+  portfolioItemCount.textContent = `${activeItems.length} Position${activeItems.length === 1 ? "" : "en"}`;
   ownPortfolioValue.textContent = formatEuro(totalValue);
-  portfolioProgressText.textContent = ownPortfolioItems.length ? "ca. 1% erfasst" : "0% erfasst";
+  portfolioProgressText.textContent = activeItems.length ? "ca. 1% erfasst" : "0% erfasst";
 
   if (!analysisGroups.length) {
     portfolioPhotoGrid.innerHTML = `<div class="empty-state">Lade mehrere Bilder hoch, dann erscheinen sie hier als Analyse-Queue.</div>`;
@@ -508,9 +528,14 @@ function renderOwnPortfolio() {
               ${group.items
                 .map(
                   (item) => `
-                    <span>
+                    <span class="${item.reviewStatus === "confirmed" ? "confirmed" : item.reviewStatus === "rejected" ? "rejected" : ""}">
                       <b>${item.name}</b>
                       <small>${item.type} · ${item.condition} · ${formatEuro(item.value * item.quantity)}</small>
+                      <em>${item.confidence}% sicher · ${item.reviewStatus === "confirmed" ? "Bestätigt" : item.reviewStatus === "rejected" ? "Verworfen" : "Bitte prüfen"}</em>
+                      <div class="review-actions">
+                        <button type="button" data-review-action="confirm" data-item-id="${item.id}">Bestätigen</button>
+                        <button type="button" data-review-action="reject" data-item-id="${item.id}">Verwerfen</button>
+                      </div>
                     </span>
                   `,
                 )
@@ -863,12 +888,15 @@ portfolioForm.addEventListener("submit", (event) => {
       const condition = portfolioName.value.trim() ? portfolioCondition.value : suggestion.condition;
 
       return {
+        id: `analysis-${Date.now()}-${index}-${detectionIndex}`,
         name,
         type,
         condition,
         quantity,
         value,
         image,
+        confidence: 91 - detectionIndex * 8,
+        reviewStatus: "pending",
         status: file ? "Analysiert lokal · Vorschlag" : "Manuell erfasst",
       };
     });
@@ -882,18 +910,26 @@ portfolioForm.addEventListener("submit", (event) => {
 
     groupItems.forEach((item) => {
       ownPortfolioItems.unshift(item);
-      collection.unshift([
-        item.name,
-        `${item.type} · ${item.condition} · Eigenes Portfolio`,
-        formatEuro(item.value * item.quantity),
-        item.image,
-      ]);
     });
   });
 
   portfolioForm.reset();
   portfolioQuantity.value = "1";
   portfolioFileName.textContent = "Mehrere HEIC/JPG/PNG lokal auswählen";
+  syncCollectionFromPortfolio();
+  renderOwnPortfolio();
+  renderCollection();
+});
+
+portfolioPhotoGrid.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-review-action]");
+  if (!button) return;
+
+  const item = ownPortfolioItems.find((entry) => entry.id === button.dataset.itemId);
+  if (!item) return;
+
+  item.reviewStatus = button.dataset.reviewAction === "confirm" ? "confirmed" : "rejected";
+  syncCollectionFromPortfolio();
   renderOwnPortfolio();
   renderCollection();
 });

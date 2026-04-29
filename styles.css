@@ -484,10 +484,19 @@ article {
 
 .detected-list span {
   display: grid;
-  gap: 2px;
+  gap: 4px;
   padding: 7px;
   border: 1px solid var(--line);
   background: rgba(8, 16, 13, 0.42);
+}
+
+.detected-list span.confirmed {
+  border-color: rgba(87, 242, 183, 0.6);
+  background: rgba(87, 242, 183, 0.1);
+}
+
+.detected-list span.rejected {
+  opacity: 0.48;
 }
 
 .detected-list b {
@@ -498,6 +507,34 @@ article {
 
 .detected-list small {
   color: var(--muted);
+}
+
+.detected-list em {
+  color: var(--yellow);
+  font-style: normal;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.review-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.review-actions button {
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid rgba(236, 255, 247, 0.15);
+  background: rgba(236, 255, 247, 0.08);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+
+.review-actions button:first-child {
+  border-color: rgba(87, 242, 183, 0.45);
+  color: var(--mint);
 }
 
 .buy-actions {
