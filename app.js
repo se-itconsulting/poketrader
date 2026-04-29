@@ -471,6 +471,7 @@ const portfolioProgressText = document.querySelector("#portfolioProgressText");
 const ownPortfolioValue = document.querySelector("#ownPortfolioValue");
 
 const ownPortfolioItems = [];
+const analysisGroups = [];
 const analysisSuggestions = [
   { name: "Charizard ex", type: "Karte", condition: "Raw NM", value: 118 },
   { name: "Lugia V Alt Art", type: "Karte", condition: "Raw NM", value: 182 },
@@ -490,21 +491,31 @@ function renderOwnPortfolio() {
   ownPortfolioValue.textContent = formatEuro(totalValue);
   portfolioProgressText.textContent = ownPortfolioItems.length ? "ca. 1% erfasst" : "0% erfasst";
 
-  if (!ownPortfolioItems.length) {
+  if (!analysisGroups.length) {
     portfolioPhotoGrid.innerHTML = `<div class="empty-state">Lade mehrere Bilder hoch, dann erscheinen sie hier als Analyse-Queue.</div>`;
     return;
   }
 
-  portfolioPhotoGrid.innerHTML = ownPortfolioItems
+  portfolioPhotoGrid.innerHTML = analysisGroups
     .map(
-      (item) => `
-        <article class="portfolio-photo-card">
-          <img src="${item.image}" alt="${item.name}" loading="lazy" />
+      (group) => `
+        <article class="portfolio-photo-card portfolio-analysis-card">
+          <img src="${group.image}" alt="${group.fileName}" loading="lazy" />
           <div>
-            <small class="analysis-status">${item.status}</small>
-            <strong>${item.name}</strong>
-            <span>${item.type} · ${item.condition} · ${item.quantity}x</span>
-            <em>${formatEuro(item.value * item.quantity)}</em>
+            <small class="analysis-status">${group.items.length} Treffer · ${group.status}</small>
+            <strong>${group.fileName}</strong>
+            <div class="detected-list">
+              ${group.items
+                .map(
+                  (item) => `
+                    <span>
+                      <b>${item.name}</b>
+                      <small>${item.type} · ${item.condition} · ${formatEuro(item.value * item.quantity)}</small>
+                    </span>
+                  `,
+                )
+                .join("")}
+            </div>
           </div>
         </article>
       `,
@@ -842,30 +853,42 @@ portfolioForm.addEventListener("submit", (event) => {
   const fallbackFiles = files.length ? files : [null];
 
   fallbackFiles.forEach((file, index) => {
-    const suggestion = analysisSuggestions[(ownPortfolioItems.length + index) % analysisSuggestions.length];
-    const name = portfolioName.value.trim() || suggestion.name;
-    const value = Number.isFinite(overrideValue) && overrideValue > 0 ? overrideValue : suggestion.value;
-    const type = portfolioType.value || suggestion.type;
-    const condition = portfolioCondition.value || suggestion.condition;
+    const detectionCount = file ? (index % 3) + 1 : 1;
     const image = file ? URL.createObjectURL(file) : "https://images.pokemontcg.io/sv3pt5/25_hires.png";
-    const status = file ? "Analysiert lokal · Vorschlag" : "Manuell erfasst";
+    const groupItems = Array.from({ length: detectionCount }, (_, detectionIndex) => {
+      const suggestion = analysisSuggestions[(ownPortfolioItems.length + index + detectionIndex) % analysisSuggestions.length];
+      const name = portfolioName.value.trim() || suggestion.name;
+      const value = Number.isFinite(overrideValue) && overrideValue > 0 ? overrideValue : suggestion.value;
+      const type = portfolioName.value.trim() ? portfolioType.value : suggestion.type;
+      const condition = portfolioName.value.trim() ? portfolioCondition.value : suggestion.condition;
 
-    ownPortfolioItems.unshift({
-      name,
-      type,
-      condition,
-      quantity,
-      value,
-      image,
-      status,
+      return {
+        name,
+        type,
+        condition,
+        quantity,
+        value,
+        image,
+        status: file ? "Analysiert lokal · Vorschlag" : "Manuell erfasst",
+      };
     });
 
-    collection.unshift([
-      name,
-      `${type} · ${condition} · Eigenes Portfolio`,
-      formatEuro(value * quantity),
+    analysisGroups.unshift({
+      fileName: file?.name || "Manueller Portfolio-Eintrag",
       image,
-    ]);
+      status: file ? "Mehrkarten-Analyse" : "Manuell",
+      items: groupItems,
+    });
+
+    groupItems.forEach((item) => {
+      ownPortfolioItems.unshift(item);
+      collection.unshift([
+        item.name,
+        `${item.type} · ${item.condition} · Eigenes Portfolio`,
+        formatEuro(item.value * item.quantity),
+        item.image,
+      ]);
+    });
   });
 
   portfolioForm.reset();
